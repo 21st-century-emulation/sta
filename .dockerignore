@@ -1,0 +1,9 @@
+bin/
+obj/
+output/
+.vscode/
+.devcontainer/
+.config/
+Properties/
+appsettings.Development.json
+test.sh
