@@ -20,10 +20,10 @@ public class ExecuteController : ControllerBase
 
     [HttpPost]
     [Route("/api/v1/execute")]
-    public async Task<ActionResult<Cpu>> Execute(byte highByte, byte lowByte, [FromBody] Cpu cpu)
+    public async Task<ActionResult<Cpu>> Execute(byte operand1, byte operand2, [FromBody] Cpu cpu)
     {
         var httpClient = _clientFactory.CreateClient();
-        await httpClient.PostAsync($"{_options.WriteMemoryUrl}?address={(highByte << 8) | lowByte}&value={cpu.State.A}", null);
+        await httpClient.PostAsync($"{_options.WriteMemoryUrl}?address={(operand2 << 8) | operand1}&value={cpu.State.A}", null);
         cpu.State.Cycles += 13;
         return Ok(cpu);
     }
