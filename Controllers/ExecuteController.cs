@@ -23,7 +23,7 @@ public class ExecuteController : ControllerBase
     public async Task<ActionResult<Cpu>> Execute(byte operand1, byte operand2, [FromBody] Cpu cpu)
     {
         var httpClient = _clientFactory.CreateClient();
-        await httpClient.PostAsync($"{_options.WriteMemoryUrl}?address={(operand2 << 8) | operand1}&value={cpu.State.A}", null);
+        await httpClient.PostAsync($"{_options.WriteMemoryUrl}?id={cpu.Id}&address={(operand2 << 8) | operand1}&value={cpu.State.A}", null);
         cpu.State.Cycles += 13;
         return Ok(cpu);
     }
@@ -31,9 +31,9 @@ public class ExecuteController : ControllerBase
     #if DEBUG
     [HttpPost]
     [Route("api/v1/writeMemory")]
-    public ActionResult WriteMemoryDebug(ushort address, byte value)
+    public ActionResult WriteMemoryDebug(string id, ushort address, byte value)
     {
-        _logger.LogWarning($"Writing {value:X2} to {address:X4}");
+        _logger.LogWarning($"Writing {value:X2} to {address:X4} for cpu {id}");
 
         return Ok();
     }
