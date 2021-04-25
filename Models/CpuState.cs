@@ -15,4 +15,6 @@ public class CpuState
     public ushort ProgramCounter { get; set; }
 
     public ulong Cycles { get; set; }
+
+    public bool InterruptsEnabled { get; set; }
 }
